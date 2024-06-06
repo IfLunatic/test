@@ -8,7 +8,7 @@ import { UserService } from 'src/user/user.service';
 export class AuthService {
   constructor(private readonly userService: UserService, private readonly jwtService: JwtService) {}
 
-  async validateUser(username: string, password: string): Promise<any> {
+  async validateUser(username: string, password: string, role: string): Promise<any> {
     const user = await this.userService.findOne(username);
     if (user && user.password === password) {
       const { password, ...result } = user;
@@ -20,7 +20,7 @@ export class AuthService {
   async login(user: IUser) {
     const {id, username, role} = user;
     return {
-      id, username, role, token: this.jwtService.sign({id: user.id, username: user.username})
+      id, username, role, token: this.jwtService.sign({id: user.id, username: user.username ,role: user.role})
     }
   }
 }
