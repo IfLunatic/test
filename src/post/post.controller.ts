@@ -13,9 +13,7 @@ export class PostController {
   @Roles(UserRole.ADMIN, UserRole.USER)
   create(@Body() createPostDto: CreatePostDto, @Request() req) {
     const userId = req.user.id;
-    console.log(userId); 
     createPostDto.userId = userId; 
-    console.log(createPostDto);
     return this.postService.create(createPostDto);
   }
 
@@ -33,13 +31,13 @@ export class PostController {
 
   @Patch(':id')
   @Roles(UserRole.ADMIN, UserRole.USER)
-  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto) {
-    return this.postService.update(+id, updatePostDto);
+  update(@Param('id') id: string, @Body() updatePostDto: UpdatePostDto, @Request() req){
+    return this.postService.update(+id, updatePostDto, req.user.id, req.user.role);
   }
 
   @Delete(':id')
   @Roles(UserRole.ADMIN, UserRole.USER)
-  remove(@Param('id') id: string) {
-    return this.postService.remove(+id);
+  remove(@Param('id') id: string, @Request() req){
+    return this.postService.remove(+id, req.user.id, req.user.role);
   }
 }
