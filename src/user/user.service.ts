@@ -21,10 +21,19 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  async findOne(username: string): Promise<User | undefined> {
+  async findOne(username: string, password: string): Promise<User | undefined> {
     return await this.userRepository.findOne({
       where: { 
-        username: username
+        username: username,
+        password: password
+      }
+    });
+  }
+
+  async findOneById(id: number): Promise<User | undefined> {
+    return await this.userRepository.findOne({
+      where: { 
+        id: id
       }
     });
   }
