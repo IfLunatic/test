@@ -5,11 +5,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRole } from './entities/enum/userRole.enum';
 import { Roles } from 'src/decorators/roles.decorator';
 
+import { IsUserRoute } from 'src/decorators/allow.decorator';
+
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
+  @IsUserRoute()
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }

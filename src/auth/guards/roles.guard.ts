@@ -8,9 +8,14 @@ export class UserRolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.get<UserRole[]>('roles', context.getHandler());
+    const isUserRoute = this.reflector.get<boolean>('isUserRoute', context.getHandler());
 
     if (requiredRoles) {
       return true; 
+    }
+
+    if (isUserRoute) {
+      return true;
     }
 
     const { user } = context.switchToHttp().getRequest();
