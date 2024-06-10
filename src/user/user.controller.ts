@@ -1,10 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Request, UseGuards, SetMetadata } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Request } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRole } from './entities/enum/userRole.enum';
 import { Roles } from 'src/decorators/roles.decorator';
-
 import { IsUserRoute } from 'src/decorators/allow.decorator';
 
 @Controller('user')

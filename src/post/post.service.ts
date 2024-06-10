@@ -5,7 +5,6 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { Post } from './entities/post.entity';
 import { UserService } from 'src/user/user.service';
-import { User } from 'src/user/entities/user.entity';
 import { UserRole } from 'src/user/entities/enum/userRole.enum';
 
 @Injectable()
