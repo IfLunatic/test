@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { All, MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { APP_GUARD } from '@nestjs/core';
 import { UserRolesGuard } from './auth/guards/roles.guard';
 import { AuthMiddleware } from './middleware/auth.middleware';
+
 
 @Module({
   imports: [
@@ -36,12 +37,15 @@ import { AuthMiddleware } from './middleware/auth.middleware';
   providers: [AppService, {
     provide: APP_GUARD,
     useClass: UserRolesGuard,
-  },],
+  },
+],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .forRoutes('/post'); 
+      .forRoutes('/post')
+      .apply(AuthMiddleware)
+      .forRoutes('/user');
   }
 }
